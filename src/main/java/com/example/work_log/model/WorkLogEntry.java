@@ -22,6 +22,10 @@ public class WorkLogEntry {
     @ElementCollection
     private List<String> tags = new ArrayList<String>();
 
+    public Long getId(){
+        return this.id;
+    }
+
     public String getTitle(){
         return this.title;
     }

@@ -5,10 +5,11 @@ async function fetchLogs() {
   const response = await fetch("/api/logs");
   const logs = await response.json();
 
-  logTableBody.innerHTML = ""; // Clear table
+  logTableBody.innerHTML = "";
 
   logs.forEach(log => {
     const row = document.createElement("tr");
+    row.setAttribute("data-id", log.id);
     row.innerHTML = `
       <td><input type="checkbox" class="logCheckBox"></td>
       <td>${log.title}</td>
@@ -43,13 +44,12 @@ addLogForm.addEventListener("submit", async (e) => {
   addLogForm.reset();
 });
 
-// Use event delegation for delete buttons
 logTableBody.addEventListener("click", (e) => {
   if (e.target.classList.contains("deleteBtn")) {
     const row = e.target.closest("tr");
-    const title = row.children[1].textContent;
+    const id = row.dataset.id;
 
-    fetch(`/api/logs/${title}`, { method: "DELETE" })
+    fetch(`/api/logs/${id}`, { method: "DELETE" })
       .then(() => {
         row.remove();
       })

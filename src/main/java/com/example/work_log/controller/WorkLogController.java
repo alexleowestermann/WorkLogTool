@@ -15,11 +15,29 @@ public class WorkLogController {
     @Autowired
     public WorkLogService workLogService;
 
+    /**
+     * Creates a new entry.
+     * @param workLogEntry
+     * @return
+     */
     @PostMapping
     public WorkLogEntry createEntry(@RequestBody WorkLogEntry workLogEntry){
         return workLogService.create(workLogEntry);
     }
 
+    /**
+     * Deletes an entry.
+     * @param id
+     */
+    @DeleteMapping("/{id}")
+    public void deleteEntry(@PathVariable Long id){
+        workLogService.deleteById(id);
+    }
+
+    /**
+     * Gets all the entries.
+     * @return
+     */
     @GetMapping
     List<WorkLogEntry> getEntries(){
         return workLogService.getAllEntries();
